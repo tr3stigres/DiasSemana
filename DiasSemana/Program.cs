@@ -1,11 +1,27 @@
-﻿class Program
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+class Program
 {
     public static void Main()
     {
         try
         {
-            DeDiaANum();
-            DeNumADia();
+
+
+
+            Dictionary<string, int> diasSemana = new Dictionary<string, int>() {
+                { "lunes", 1 },
+                { "martes", 2 },
+                { "miercoles", 3 },
+                { "jueves", 4 },
+                { "viernes", 5 },
+                { "sabado", 6 },
+                { "domingo", 7 }
+            };
+
+            
+            DeDiaANum(diasSemana);
+            DeNumADia(diasSemana);
         }
         catch (Exception error)
         {
@@ -13,40 +29,40 @@
         }
     }
 
-    public static void DeDiaANum()
+    public static void DeDiaANum(Dictionary<string, int> diasSemana)
     {
-        var diasSemana = new Dictionary<string, int>
-        {
-            ["lunes"] = 1,
-            ["martes"] = 2,
-            ["miercoles"] = 3,
-            ["jueves"] = 4,
-            ["viernes"] = 5,
-            ["sabado"] = 6,
-            ["domingo"] = 7
-        };
+
+        string diaEscogido = "";
 
         do
         {
             Console.Write("Introduce el dia de la semana: ");
             string? resposta = Console.ReadLine();
 
-            if (!diasSemana.TryGetValue(resposta.ToLower(), out int numDia))
+            if (resposta == null)
+            {
+                Console.WriteLine("El texto introducido no es válido");
+                continue;
+            }
+
+            diaEscogido = resposta.ToLower();
+
+            if (!diasSemana.ContainsKey(diaEscogido))
             {
                 Console.WriteLine("El texto introducido no es un dia de la semana");
                 continue;
             }
 
-            Console.WriteLine($"El {resposta} es el dia {numDia} de la semana");
+            Console.WriteLine($"El {resposta} es el dia {diasSemana[diaEscogido]} de la semana");
             break;
 
 
         } while (true);
     }
 
-    public static void DeNumADia()
+    public static void DeNumADia(Dictionary<string, int> diasSemana)
     {
-        string[] diasSemana = {"", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"};
+        
         int diaEscogido = 0;
 
 
@@ -65,8 +81,21 @@
                 Console.WriteLine("El número introducido no es válido");
                 continue;
             }
+            if (!diasSemana.ContainsValue(diaEscogido))
+            {
+                Console.WriteLine("El texto introducido no es un dia de la semana");
+                continue;
+            }
+            
+            foreach (var dia in diasSemana)
+            {
+                if (dia.Value == diaEscogido)
+                {
+                    Console.WriteLine($"El dia {resposta} de la semana es {dia.Key}");
+                    break;
+                }
+            }
 
-            Console.WriteLine($"El dia {resposta} de la semana es {diasSemana[diaEscogido]}");
             break;
 
         } while (true);
