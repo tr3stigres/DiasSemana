@@ -6,9 +6,6 @@ class Program
     {
         try
         {
-
-
-
             Dictionary<string, int> diasSemana = new Dictionary<string, int>() {
                 { "lunes", 1 },
                 { "martes", 2 },
@@ -18,8 +15,7 @@ class Program
                 { "sabado", 6 },
                 { "domingo", 7 }
             };
-
-            
+   
             DeDiaANum(diasSemana);
             DeNumADia(diasSemana);
         }
@@ -68,20 +64,10 @@ class Program
 
         do
         {
-            Console.Write("Introduce un múmero del 1 al 7: ");
+            Console.Write("Introduce el número del día de la semana: ");
             string? resposta = Console.ReadLine();
 
-            if (!int.TryParse(resposta, out diaEscogido))
-            {
-                Console.WriteLine("El texto introducido no es válido");
-                continue;
-            }
-            if (diaEscogido < 1 || diaEscogido > 7)
-            {
-                Console.WriteLine("El número introducido no es válido");
-                continue;
-            }
-            if (!diasSemana.ContainsValue(diaEscogido))
+            if (!int.TryParse(resposta, out diaEscogido) || !diasSemana.ContainsValue(diaEscogido))
             {
                 Console.WriteLine("El texto introducido no es un dia de la semana");
                 continue;
